@@ -2,15 +2,15 @@
   "Results": [
     {
       "clientName": "ExampleClient1",
-      "prodPasskey": "ExampleClient1 API key"
+      "prodPasskey": "ExampleClient1APIkey"
     },
     {
       "clientName": "ExampleClient2",
-      "prodPasskey": "ExampleClient2 API key"
+      "prodPasskey": "ExampleClient2APIkey"
     },
     {
       "clientName": "ExampleClient3",
-      "prodPasskey": "ExampleClient3 API key"
+      "prodPasskey": "ExampleClient3APIkey"
     }
     ]
 }

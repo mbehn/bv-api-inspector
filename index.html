@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="icon" href="images/favicon.ico" type="image/gif" sizes="16x16">
+    <script src="jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="jquery/jquery-ui.css">
+    <script src="jquery/jquery-ui.js"></script>
+    <title>API Inspector</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="http://meyerweb.com/eric/tools/css/reset/reset200802.css">
+    <script type="text/javascript" src="script.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</head>
+
+<body id="home">
+
+    <div id="container" class="container">
+        <header>
+            <div id="logo">                
+                <div id="pagetitle">
+                    <h1>Bazaarvoice API Inspector</h1>
+                </div>
+            </div>
+        </header>
+        <a href="product-compare.html">Product Compare Tool</a>
+        <br />
+        <br />
+        <form id="form" role="form">
+            <table class="table-condensed">
+                <tr>
+                    <td><label for="client-name"> Client Search:</label></td>
+                    <td>
+                        <input type="text" class="form-control" name="clientname" id="client-name">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="apikey">API Key: </label></td>
+                    <td>
+                        <input type="text" class="form-control" name="apikey" id="apikey" readonly>
+                    </td>
+                    <td>
+                        &nbsp;<input type="button" class="btn btn-primary btn-sm" name="load-product-names" id="load-product-names" value="Load product names" onclick="loadProductNames()">
+                    </td>
+                    <td>
+                        &nbsp;<input type="button" class="btn btn-primary btn-sm" name="custom-apikey" id="custom-apikey" value="Enter apikey">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="product-name">Search Product Name: </label></td>
+                    <td>
+                        <input type="text"  class="form-control" name="product-name" id="product-name">
+                    </td>
+                    <td>
+                        &nbsp;<input type="button" class="btn btn-primary btn-sm" onclick="loadProductId()" value="Load product ID" />
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="productid">Product Id: </label></td>
+                    <td>
+                        <input type="text" class="form-control" name="productid" id="productid" readonly>
+                    </td>
+                    <td>
+                        &nbsp;<input type="button" class="btn btn-primary btn-sm" name="custom-id" id="custom-id" value="Enter id">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="display-code">Display Code Override: </label></td>
+                    <td>
+                        <input class="form-control" type="text" name="displaycode" id="display-code">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="staging-flag">Staging: </label></td>
+                    <td class="checkbox">
+                        <input type="checkbox" id="staging-flag" id="staging-flag">
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <div id="buttons">
+                <input type="button" class="btn btn-primary btn-sm" value="Get Product Info" onclick="renderFields()" />
+                <input type="button" class="btn btn-danger btn-sm" value="Clear" id="clear" />
+                <input type="button" class="btn btn-primary btn-sm" value="get some product ids" id="products" onclick="getProductInformation()" /> - Only returns Active products
+            </div>
+        </form>
+
+        <div id="product-content">
+            <label>Product Info:</label>
+            <table class="table table-striped" id="product-info"></table>
+            <label>Category Info:</label>
+            <table class="table table-striped" id="category-info"></table>
+            <section class="col col-lg-4">
+              <label>Review Stats:</label>
+              <table class="table" id="review-stats-info"></table>
+            </section>
+            <section class="table form-submit">
+              <table>
+                <tr>
+                    <td><label>Search secondary-ratings:&nbsp;&nbsp;</label></td>
+                    <td>
+                        <input type="text" class="form-control" id="ratings-search" />
+                        <td></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Search context questions:&nbsp;&nbsp;</label></td>
+                    <td>
+                        <input type="text" class="form-control" id="cdv-search" />
+                    </td>
+                </tr>
+            </table>
+            </section>          
+            <h3 id="submission-fields">Submission Form Fields</h3>
+            <table id="checkboxes">
+                <tr>
+                    <td style="background-color:#00FA9A;">Context Data Questions</td>
+                    <td>
+                        <!-- <input type="checkbox" id="context-data-questions"> -->
+                    </td>
+                </tr>
+                <tr>
+                    <td style="background-color:#00FFFF;">Secondary Ratings</td>
+                    <td>
+                        <!-- input type="checkbox" id="secondary-ratings"> -->
+                    </td>
+                </tr>
+            </table>            
+            <div id="fields"></div>
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        $("#clear").click(function() {
+            $("#product-info, #fields, #category-info, #product-header, #review-stats-info").empty();
+            // $("#fields").empty();
+            document.getElementById('client-name').value = '';
+            document.getElementById('apikey').value = '';
+            document.getElementById('product-name').value = '';
+            document.getElementById('productid').value = '';
+            document.getElementById('product-name').placeholder = '';
+        });
+        $("#custom-id").click(function(){
+          $("#productid").val('')
+          $("#productid").attr("readonly", false);
+        })
+        $("#custom-apikey").click(function(){
+          $("#apikey").val('')
+          $("#apikey").attr("readonly", false);
+        })
+        $(".products-productid").click(function() {
+            document.getElementById("productid").value = this.value
+        })
+        function loadProductNames() {
+          $("#product-name").val('');
+          $("#apikey").attr("readonly", true)
+            var currentApiKey = document.getElementById('apikey').value;
+            $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&limit=100', function(productAutoFill) {
+                var productName
+                var productNameArray = [];
+                var productIdArray = [];
+                $.each(productAutoFill.Results, function(p, product) {
+                    if (!productAutoFill.Results[p].Name) {
+                        productName = "No Product Name" + ' - ' + productAutoFill.Results[p].Id;
+                        productNameArray.push(productName);
+                    }
+                    if (productAutoFill.Results[p].Name) {
+                        productNameArray.push(productAutoFill.Results[p].Name);
+                    }
+                    $("#product-name").autocomplete({
+                        source: productNameArray.sort()
+                    })                    
+                })
+                if (productAutoFill.TotalResults > 100) {
+                  $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&limit=100&offset=100', function(productAutoFillPush){
+                    $.each(productAutoFillPush.Results, function(pp, product) {
+                      if (!productAutoFillPush.Results[pp].Name) {
+                        productName = "No Product Name" + ' - ' + productAutoFill.Results[pp].Id;
+                        productNameArray.push(productName);
+                    }
+                    if (productAutoFill.Results[pp].Name) {
+                        productNameArray.push(productAutoFill.Results[pp].Name);
+                    }
+                    $("#product-name").autocomplete({
+                        source: productNameArray.sort()
+                    })                    
+                    })
+                  })
+                }
+                if (productAutoFill.TotalResults > 200) {
+                  $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&limit=100&offset=200', function(productAutoFillPush){
+                    $.each(productAutoFillPush.Results, function(pp2, product) {
+                      if (!productAutoFillPush.Results[pp2].Name) {
+                        productName = "No Product Name" + ' - ' + productAutoFill.Results[pp2].Id;
+                        productNameArray.push(productName);
+                    }
+                    if (productAutoFill.Results[pp2].Name) {
+                        productNameArray.push(productAutoFill.Results[pp2].Name);
+                    }
+                    $("#product-name").autocomplete({
+                        source: productNameArray.sort()
+                    })                    
+                    })
+                  })
+                }
+            })
+          $("#product-name").attr("placeholder","Products loaded");
+        }
+
+        function loadProductId() {
+            var currentApiKey = document.getElementById('apikey').value;
+            $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&filter=name:eq:' + encodeURIComponent(document.getElementById('product-name').value), function(productAutoFill) {
+                $("#productid").val(productAutoFill.Results[0].Id)
+            })
+        }
+    </script>
+    <footer>
+
+    </footer>
+</body>
+
+</html>

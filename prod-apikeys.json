@@ -1,0 +1,16 @@
+{
+  "Results": [
+    {
+      "clientName": "ExampleClient1",
+      "prodPasskey": "ExampleClient1 API key"
+    },
+    {
+      "clientName": "ExampleClient2",
+      "prodPasskey": "ExampleClient2 API key"
+    },
+    {
+      "clientName": "ExampleClient3",
+      "prodPasskey": "ExampleClient3 API key"
+    }
+    ]
+}

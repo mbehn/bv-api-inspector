@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Product Compare</title>
+	<script src="jquery.js"></script>
+	<link rel="stylesheet" type="text/css" href="jquery/jquery-ui.css">
+	<script src="jquery/jquery-ui.js"></script>
+  <script src="compare.js"></script>
+	<title>Ratings/Context Data Values</title>
+  <link rel="stylesheet" type="text/css" href="http://meyerweb.com/eric/tools/css/reset/reset200802.css">
+    <script type="text/javascript" src="script.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="http://meyerweb.com/eric/tools/css/reset/reset200802.css">
+</head>
+<body>
+        <div id="container" class="container">
+            <header>
+               <div id="logo">
+                  <img src="images/logo.png">
+                  <div id="pagetitle">
+                     <h1>Bazaarvoice Product Compare</h1>
+                  </div>
+              </div> 
+            </header>
+            <a href="index.html">API Inspector</a><br /><br />
+            <!-- <div id="source">
+              Source Client: <input type="text" id="source-client" />
+              <br />
+              API Key: <input type="text" id="source-apikey" class="apikey" >
+              <br />            	
+            </div>
+            <div id="destination">
+              Destination Client: <input type="text" id="destination-client" />
+              <br />
+              API Key: <input type="text" id="destination-apikey" class="apikey" >
+              <br />
+            </div> -->
+            <table>
+              <tr><td><label for="source-client">Source Client: </label></td><td><input type="text" class="form-control" id="source-client" /></td></tr>
+              <tr><td><label for="source-apikey">API Key: </label></td><td><input type="text" class="form-control" id="source-apikey" class="apikey" onblur="loadSourceProductIds()"></td></tr>
+              <tr><td><label for="source-product-name">Search Product Name: </label></td><td><input type="text" class="form-control" id="source-product-name" /></td></tr>
+              <tr><td><label for="source-productid">Source Product ID: </label></td><td><input type="text" class="form-control" id="source-productid" class="source-productid" ></td></tr>
+              <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+              <tr><td><label for="destination-client">Destination Client: </label></td><td><input type="text" class="form-control" id="destination-client" /></td></tr>
+              <tr><td><label for="destination-apikey">API Key: </label></td><td><input type="text" class="form-control" id="destination-apikey" class="apikey" onblur="loadDestinationProductIds()"></td></tr>
+              <tr><td><label for-"destination-product-name">Search Product Name: </label></td><td><input type="text" class="form-control" id="destination-product-name" /></td></tr>
+              <tr><td><label for="destination-productid">Destination Product ID: </label></td><td><input type="text" class="form-control" id="destination-productid" class="destination-productid" ></td></tr>
+            </table>
+            <input type="button" value="Compare Products" onclick="compareProducts()" id="compare-products"/><br />
+            
+            <div id="results">
+              <div id="source-results">
+              </div>
+              <div id="destination-results">
+              </div>
+
+            </div>
+        </div>
+<script type="text/javascript">
+      $.getJSON('prod-apikeys.json', function(apiKeys) {
+         var clients = []
+         var passkeys = []
+             $.each(apiKeys.Results, function(c, client){
+                 clients.push(apiKeys.Results[c].clientName);
+                 passkeys.push(apiKeys.Results[c].prodPasskey);
+             })
+             $("#source-client, #destination-client").autocomplete({
+               source: clients
+         })
+             $("#source-client").keydown(function(){
+               var selectedSourceClient = $("#source-client").val();
+               $.each(apiKeys.Results, function(sc, clientname){
+                  if (selectedSourceClient == apiKeys.Results[sc].clientName) {
+                     document.getElementById('source-apikey').value = apiKeys.Results[sc].prodPasskey
+                     // apiKeys.Results[cn].passkey = $("#apikey").val();
+                  }
+               })
+             })
+
+             $("#destination-client").keydown(function(){
+               var selectedDestinationClient = $("#destination-client").val();
+               $.each(apiKeys.Results, function(dc, clientname){
+                  if (selectedDestinationClient == apiKeys.Results[dc].clientName) {
+                     document.getElementById('destination-apikey').value = apiKeys.Results[dc].prodPasskey
+                     // apiKeys.Results[cn].passkey = $("#apikey").val();
+                  }
+               })
+             })
+ })
+
+   </script>
+   <footer></footer>
+</body>
+</html>
+

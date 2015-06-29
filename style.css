@@ -1,0 +1,45 @@
+footer {height:100px;}
+strong {padding: 5px}
+th {text-align: left}
+tbody {vertical-align: bottom !Important}
+td {border: 1px solid black;}
+h1 {margin:0;}
+input {margin-right:20px;}
+input[type="button"] {-moz-appearance:none;-webkit-appearance:none;}
+input[type=checkbox] {margin:0 !Important;}
+table {max-width:800px;}
+li {list-style: none}
+tbody, td, tr, button, input, label {vertical-align: bottom !Important;}
+#fields {max-width: 600px; border:1px solid black; border-radius: 3px}
+.field {padding:10px 0 10px 10px; border-bottom:1px solid black;}
+.options {padding-left:20px;}
+#product-info {padding-top:10px;margin-bottom: 10px}
+#form {margin-bottom: 10px}
+#buttons {margin-top:15px;}
+#logo {width:445px;margin:0 auto;}
+#category-heirarchy {margin:10px 0;}
+.check {height:10px;}
+div[id*="contextdatavalue_"] {background-color:#00FA9A;}
+div[id*="rating_"] {background-color:#00FFFF;}
+#product-image {min-width:50px;max-width: 100px}
+/*.review-statistics, .upc, .productid, .productinfo {width:175px;}*/
+.products-productid {padding-right:10px;}
+#upc-warn {display:none;}
+.products-productid, .products-product-name {border-bottom:1px solid black; padding:5px;}
+/*#apikey {display:none;}*/
+div[id*="tag_"]/*, div[id*="contextdatavalue_"], div[id*="rating_"],div[id*="photourl_"]*/, div[id*="tagid_"]/*, div[id*="photocaption_"]*/,div[id*="videocaption_"],div[id*="videourl_"],div[id*="productrecommendationcaption_"],div[id*="productrecommendationid_"],div[id*="additionalfield_"],#userlocationgeocode_country,#userlocation,#netpromoterexpanded,#usernickname, #sendemailalertwhencommented, #userlocationgeocode_latitude, #isratingsonly, #userlocationgeocode_region, #userlocationgeocode_city, #userlocationgeocode_longitude, #sendemailalertwhenpublished, #reviewtext, #netpromotercomment, #rating, #title, #isrecommended, #useremail, #agreedtotermsandconditions {display:none;}
+#netpromoterscore {display:none !important;}
+.ui-menu-item {font-weight: normal}
+#checkboxes td {padding:10px;font-size: 18px;font-weight: bold;}
+#ratings-search, #cdv-search {width:600px;padding:5px;}
+#api-key-button {width:30px; background-color:#00FA9A;}
+#submission-fields {margin:10px 0;}
+#compare-products {margin-top:10px;}
+form input[type="text"] {width:200px;}
+.btn {padding: 4px 12px;}
+#product-name {font-size: 18px; margin:0;}
+.options {max-width:500px;}
+.review-statistics {background-color: lightgreen;}
+#product-info label {margin:0;}
+#container {width:1000px;}
+#product-info > tbody > tr > td:nth-child(1), #category-info > tbody > tr > td:nth-child(1) {width:140px;}

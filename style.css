@@ -43,3 +43,4 @@ form input[type="text"] {width:200px;}
 #product-info label {margin:0;}
 #container {width:1000px;}
 #product-info > tbody > tr > td:nth-child(1), #category-info > tbody > tr > td:nth-child(1) {width:140px;}
+#product-compare header {margin-top:20px}

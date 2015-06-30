@@ -1,7 +1,5 @@
 function renderFields() {
     $("#product-info, #fields, #category-info, #product-header, #review-stats-info").empty();
-    // $("#fields").empty();
-    var env
     if ($("#staging-flag").attr('checked')) {
         var apihost = 'http://stg.api.bazaarvoice.com/data';
     } else {

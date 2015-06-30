@@ -10,13 +10,15 @@ input[type=checkbox] {margin:0 !Important;}
 table {max-width:800px;}
 li {list-style: none}
 tbody, td, tr, button, input, label {vertical-align: bottom !Important;}
+header {width:455px; margin:0 auto;}
+#logo {width:200px; margin:0 auto;}
+#pagetitle h1 {margin:0;}
 #fields {max-width: 600px; border:1px solid black; border-radius: 3px}
 .field {padding:10px 0 10px 10px; border-bottom:1px solid black;}
 .options {padding-left:20px;}
 #product-info {padding-top:10px;margin-bottom: 10px}
 #form {margin-bottom: 10px}
 #buttons {margin-top:15px;}
-#logo {width:445px;margin:0 auto;}
 #category-heirarchy {margin:10px 0;}
 .check {height:10px;}
 div[id*="contextdatavalue_"] {background-color:#00FA9A;}
@@ -43,4 +45,4 @@ form input[type="text"] {width:200px;}
 #product-info label {margin:0;}
 #container {width:1000px;}
 #product-info > tbody > tr > td:nth-child(1), #category-info > tbody > tr > td:nth-child(1) {width:140px;}
-#product-compare header {margin-top:20px}
+#product-content {display:none;}

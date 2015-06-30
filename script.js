@@ -55,7 +55,7 @@ function renderFields() {
                 $(currentField).append(options);
                 $(options).append('<h4>Options</h4>')
                 $.each(json.Data.Fields[i].Options, function(o, option) {
-                    $(options).append('<option class="option form-control">Label: ' + json.Data.Fields[i].Options[o].Label + ' - Submission ID: ' + json.Data.Fields[i].Options[o].Value + '</option>')
+                    $(options).append('<option class="option form-control">Submission ID ' + json.Data.Fields[i].Options[o].Value + ' - Label: ' + json.Data.Fields[i].Options[o].Label + '</option>')
                 })
             }
         })

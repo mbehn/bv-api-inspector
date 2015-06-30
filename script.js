@@ -138,7 +138,7 @@ function renderFields() {
         console.log(categoriesjson)
         $("#category-info").append('<tr><td>Category Name: </td><td><a href="' + categoriesjson.Results[0].CategoryPageUrl + '" target="_blank">' + categoriesjson.Results[0].Name + '</a></td></tr>' +
                                    '<tr><td>CategoryId: </td><td><code>' + categoriesjson.Results[0].Id + '</code></td></tr>' +
-                                   '<tr><td>Category URL: </td><td>' + categoriesjson.Results[0].CategoryPageUrl + '</td></tr>'
+                                   '<tr><td>Category URL: </td><td><code>' + categoriesjson.Results[0].CategoryPageUrl + '</code></td></tr>'
                                     
 
 
@@ -169,6 +169,7 @@ function renderFields() {
 
             )
         })
+    $("#product-content").show()
 }
 
 
@@ -210,8 +211,11 @@ $.getJSON('prod-apikeys.json', function(apiKeys) {
                 prodPasskey.push(apiKeys.Results[c].prodPasskey);
             })
             $("#client-name").autocomplete({
-                source: clients
-            })
+                source: clients,
+                open: function(){
+                    $('#client-name ul.ui-autocomplete').fadeIn('slow')
+                }
+            });
             $("#client-name").keydown(function() {
                 var selectedClient = $("#client-name").val();
                 $.each(apiKeys.Results, function(cn, clientname) {

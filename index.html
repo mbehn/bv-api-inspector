@@ -24,10 +24,11 @@
 <body id="home">
 
     <div id="container" class="container">
-        <header>              
+        <header class="header">            
             <div id="pagetitle">
                 <h1>API Inspector</h1>
             </div>
+            
         </header>
         <a href="product-compare.html">Product Compare Tool</a>
         <br />
@@ -85,7 +86,7 @@
             </table>
             <br />
             <div id="buttons">
-                <input type="button" class="btn btn-primary btn-sm" value="Get Product Info" onclick="renderFields()" />
+                <input id="get-product-info" type="button" class="btn btn-primary btn-sm" value="Get Product Info" onclick="renderFields()" />
                 <input type="button" class="btn btn-danger btn-sm" value="Clear" id="clear" />
                 <input type="button" class="btn btn-primary btn-sm" value="get some product ids" id="products" onclick="getProductInformation()" />
             </div>
@@ -117,21 +118,7 @@
                 </tr>
             </table>
             </section>          
-            <h3 id="submission-fields">Submission Form Fields</h3>
-            <table id="checkboxes">
-                <tr>
-                    <td style="background-color:#00FA9A;">Context Data Questions</td>
-                    <td>
-                        <!-- <input type="checkbox" id="context-data-questions"> -->
-                    </td>
-                </tr>
-                <tr>
-                    <td style="background-color:#00FFFF;">Secondary Ratings</td>
-                    <td>
-                        <!-- input type="checkbox" id="secondary-ratings"> -->
-                    </td>
-                </tr>
-            </table>            
+            <h3 id="submission-fields">Submission Form Fields</h3>                        
             <div id="fields"></div>
 
         </div>
@@ -140,6 +127,7 @@
 
     <script type="text/javascript">
         $("#clear").click(function() {
+            $("#product-content").hide()
             $("#product-info, #fields, #category-info, #product-header, #review-stats-info").empty();
             // $("#fields").empty();
             document.getElementById('client-name').value = '';
@@ -176,7 +164,10 @@
                         productNameArray.push(productAutoFill.Results[p].Name);
                     }
                     $("#product-name").autocomplete({
-                        source: productNameArray.sort()
+                        source: productNameArray.sort(),
+                        open: function(){
+                            $('#product-name ul.ui-autocomplete').fadeTo('slow', 1);
+                        }
                     })                    
                 })
                 if (productAutoFill.TotalResults > 100) {
@@ -217,6 +208,7 @@
 
         function loadProductId() {
             var currentApiKey = document.getElementById('apikey').value;
+            // var productName = document.getElementById('product-name').value
             $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&filter=name:eq:' + encodeURIComponent(document.getElementById('product-name').value), function(productAutoFill) {
                 $("#productid").val(productAutoFill.Results[0].Id)
             })

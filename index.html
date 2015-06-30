@@ -163,7 +163,7 @@
           $("#product-name").val('');
           $("#apikey").attr("readonly", true)
             var currentApiKey = document.getElementById('apikey').value;
-            $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&limit=100', function(productAutoFill) {
+            $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&filter=isactive:eq:true&limit=100', function(productAutoFill) {
                 var productName
                 var productNameArray = [];
                 var productIdArray = [];
@@ -180,7 +180,7 @@
                     })                    
                 })
                 if (productAutoFill.TotalResults > 100) {
-                  $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&limit=100&offset=100', function(productAutoFill){
+                  $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&filter=isactive:eq:true&limit=100&offset=100', function(productAutoFill){
                     $.each(productAutoFill.Results, function(pp, product) {
                       if (!productAutoFill.Results[pp].Name) {
                         productName = "No Product Name" + ' - ' + productAutoFill.Results[pp].Id;
@@ -196,7 +196,7 @@
                   })
                 }
                 if (productAutoFill.TotalResults > 200) {
-                  $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&limit=100&offset=200', function(productAutoFill){
+                  $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&filter=isactive:eq:true&limit=100&offset=200', function(productAutoFill){
                     $.each(productAutoFill.Results, function(pp2, product) {
                       if (!productAutoFill.Results[pp2].Name) {
                         productName = "No Product Name" + ' - ' + productAutoFill.Results[pp2].Id;

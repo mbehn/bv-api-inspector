@@ -209,10 +209,7 @@ $.getJSON('prod-apikeys.json', function(apiKeys) {
                 prodPasskey.push(apiKeys.Results[c].prodPasskey);
             })
             $("#client-name").autocomplete({
-                source: clients,
-                open: function(){
-                    $('#client-name ul.ui-autocomplete').fadeIn('slow')
-                }
+                source: clients
             });
             $("#client-name").keydown(function() {
                 var selectedClient = $("#client-name").val();

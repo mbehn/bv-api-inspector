@@ -162,53 +162,44 @@
                     }
                     if (productAutoFill.Results[p].Name) {
                         productNameArray.push(productAutoFill.Results[p].Name);
-                    }
-                    $("#product-name").autocomplete({
-                        source: productNameArray.sort(),
-                        open: function(){
-                            $('#product-name ul.ui-autocomplete').fadeTo('slow', 1);
-                        }
-                    })                    
+                    }                  
                 })
                 if (productAutoFill.TotalResults > 100) {
                   $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&filter=isactive:eq:true&limit=100&offset=100', function(productAutoFill){
-                    $.each(productAutoFill.Results, function(pp, product) {
+                    $.each(productAutoFill.Results, function(p, product) {
                       if (!productAutoFill.Results[pp].Name) {
-                        productName = "No Product Name" + ' - ' + productAutoFill.Results[pp].Id;
+                        productName = "No Product Name" + ' - ' + productAutoFill.Results[p].Id;
                         productNameArray.push(productName);
                     }
-                    if (productAutoFill.Results[pp].Name) {
-                        productNameArray.push(productAutoFill.Results[pp].Name);
-                    }
-                    $("#product-name").autocomplete({
-                        source: productNameArray.sort()
-                    })                    
+                    if (productAutoFill.Results[p].Name) {
+                        productNameArray.push(productAutoFill.Results[p].Name);
+                    }                  
                     })
                   })
                 }
                 if (productAutoFill.TotalResults > 200) {
                   $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&filter=isactive:eq:true&limit=100&offset=200', function(productAutoFill){
-                    $.each(productAutoFill.Results, function(pp2, product) {
-                      if (!productAutoFill.Results[pp2].Name) {
-                        productName = "No Product Name" + ' - ' + productAutoFill.Results[pp2].Id;
+                    $.each(productAutoFill.Results, function(p, product) {
+                      if (!productAutoFill.Results[p].Name) {
+                        productName = "No Product Name" + ' - ' + productAutoFill.Results[p].Id;
                         productNameArray.push(productName);
                     }
-                    if (productAutoFill.Results[pp2].Name) {
-                        productNameArray.push(productAutoFill.Results[pp2].Name);
-                    }
-                    $("#product-name").autocomplete({
-                        source: productNameArray.sort()
-                    })                    
+                    if (productAutoFill.Results[p].Name) {
+                        productNameArray.push(productAutoFill.Results[p].Name);
+                    }                   
                     })
                   })
                 }
+                $("#product-name").autocomplete({
+                    source: productNameArray.sort()
+                })
             })
+          
           $("#product-name").attr("placeholder","Products loaded");
         }
 
         function loadProductId() {
             var currentApiKey = document.getElementById('apikey').value;
-            // var productName = document.getElementById('product-name').value
             $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&filter=name:eq:' + encodeURIComponent(document.getElementById('product-name').value), function(productAutoFill) {
                 $("#productid").val(productAutoFill.Results[0].Id)
             })

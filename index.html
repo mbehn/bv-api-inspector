@@ -47,10 +47,10 @@
                         <input type="text" class="form-control" name="apikey" id="apikey" readonly>
                     </td>
                     <td>
-                        &nbsp;<input type="button" class="btn btn-primary btn-sm" name="load-product-names" id="load-product-names" value="Load product names" onclick="loadProductNames()">
+                        &nbsp;<input type="button" class="bv-button btn btn-sm" name="load-product-names" id="load-product-names" value="Load product names" onclick="loadProductNames()">
                     </td>
                     <td>
-                        &nbsp;<input type="button" class="btn btn-primary btn-sm" name="custom-apikey" id="custom-apikey" value="Enter apikey">
+                        &nbsp;<input type="button" class="bv-button btn btn-sm" name="custom-apikey" id="custom-apikey" value="Enter apikey">
                     </td>
                 </tr>
                 <tr>
@@ -59,7 +59,7 @@
                         <input type="text"  class="form-control" name="product-name" id="product-name">
                     </td>
                     <td>
-                        &nbsp;<input type="button" class="btn btn-primary btn-sm" onclick="loadProductId()" value="Load product ID" />
+                        &nbsp;<input type="button" class="bv-button btn btn-sm" onclick="loadProductId()" value="Load product ID" />
                     </td>
                 </tr>
                 <tr>
@@ -68,7 +68,7 @@
                         <input type="text" class="form-control" name="productid" id="productid" readonly>
                     </td>
                     <td>
-                        &nbsp;<input type="button" class="btn btn-primary btn-sm" name="custom-id" id="custom-id" value="Enter id">
+                        &nbsp;<input type="button" class="bv-button btn btn-sm" name="custom-id" id="custom-id" value="Enter id">
                     </td>
                 </tr>
                 <tr>
@@ -86,14 +86,15 @@
             </table>
             <br />
             <div id="buttons">
-                <input id="get-product-info" type="button" class="btn btn-primary btn-sm" value="Get Product Info" onclick="renderFields()" />
-                <input type="button" class="btn btn-danger btn-sm" value="Clear" id="clear" />
-                <input type="button" class="btn btn-primary btn-sm" value="get some product ids" id="products" onclick="getProductInformation()" />
+                <input id="get-product-info" type="button" class="btn btn-sm" value="Get Product Info" onclick="renderFields()" />
+                <input type="button" class="bv-button btn btn-danger btn-sm" value="Clear" id="clear" />
+                <input type="button" class="bv-button btn btn-sm" value="get some product ids" id="products" onclick="getProductInformation()" />
             </div>
         </form>
 
         <div id="product-content">
-            <label>Product Info:</label>
+            <label>Product Info:</label><br />
+            <a href="#fields" class="sliding-link" id="fields-link" data-toggle="modal" data-target="#submission-fields-container"><strong>Show available review submission fields for this product</strong></a>
             <table class="table table-striped" id="product-info"></table>
             <label>Category Info:</label>
             <table class="table table-striped" id="category-info"></table>
@@ -118,96 +119,28 @@
                 </tr>
             </table>
             </section>          
-            <h3 id="submission-fields">Submission Form Fields</h3>                        
-            <div id="fields"></div>
+            <div id="submission-fields-container" class="modal fade col-lg-5 center" role="modal">
+                <div class="modal-content">
+                    <div class="modal-header" id="modal-header">
+                        <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <h3 class="modal-title" id="submission-fields">Submission Form Fields</h3>
+                    <div id="key">
+                        <h5 id="secondary-rating-dimensions">Secondary Rating Dimensions</h5>
+                        <h5 id="context-data-questions">Context Data Questions</h5>
+                    </div>                           
+                    <div id="fields"></div>
+                </div>
+            </div>
 
         </div>
 
     </div>
-
-    <script type="text/javascript">
-        $("#clear").click(function() {
-            $("#product-content").hide()
-            $("#product-info, #fields, #category-info, #product-header, #review-stats-info").empty();
-            // $("#fields").empty();
-            document.getElementById('client-name').value = '';
-            document.getElementById('apikey').value = '';
-            document.getElementById('product-name').value = '';
-            document.getElementById('productid').value = '';
-            document.getElementById('product-name').placeholder = '';
-        });
-        $("#custom-id").click(function(){
-          $("#productid").val('')
-          $("#productid").attr("readonly", false);
-        })
-        $("#custom-apikey").click(function(){
-          $("#apikey").val('')
-          $("#apikey").attr("readonly", false);
-        })
-        $(".products-productid").click(function() {
-            document.getElementById("productid").value = this.value
-        })
-        function loadProductNames() {
-          $("#product-name").val('');
-          $("#apikey").attr("readonly", true)
-            var currentApiKey = document.getElementById('apikey').value;
-            $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&filter=isactive:eq:true&limit=100', function(productAutoFill) {
-                var productName
-                var productNameArray = [];
-                var productIdArray = [];
-                $.each(productAutoFill.Results, function(p, product) {
-                    if (!productAutoFill.Results[p].Name) {
-                        productName = "No Product Name" + ' - ' + productAutoFill.Results[p].Id;
-                        productNameArray.push(productName);
-                    }
-                    if (productAutoFill.Results[p].Name) {
-                        productNameArray.push(productAutoFill.Results[p].Name);
-                    }                  
-                })
-                if (productAutoFill.TotalResults > 100) {
-                  $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&filter=isactive:eq:true&limit=100&offset=100', function(productAutoFill){
-                    $.each(productAutoFill.Results, function(p, product) {
-                      if (!productAutoFill.Results[pp].Name) {
-                        productName = "No Product Name" + ' - ' + productAutoFill.Results[p].Id;
-                        productNameArray.push(productName);
-                    }
-                    if (productAutoFill.Results[p].Name) {
-                        productNameArray.push(productAutoFill.Results[p].Name);
-                    }                  
-                    })
-                  })
-                }
-                if (productAutoFill.TotalResults > 200) {
-                  $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&filter=isactive:eq:true&limit=100&offset=200', function(productAutoFill){
-                    $.each(productAutoFill.Results, function(p, product) {
-                      if (!productAutoFill.Results[p].Name) {
-                        productName = "No Product Name" + ' - ' + productAutoFill.Results[p].Id;
-                        productNameArray.push(productName);
-                    }
-                    if (productAutoFill.Results[p].Name) {
-                        productNameArray.push(productAutoFill.Results[p].Name);
-                    }                   
-                    })
-                  })
-                }
-                $("#product-name").autocomplete({
-                    source: productNameArray.sort()
-                })
-            })
-          
-          $("#product-name").attr("placeholder","Products loaded");
-        }
-
-        function loadProductId() {
-            var currentApiKey = document.getElementById('apikey').value;
-            $.getJSON('http://api.bazaarvoice.com/data/products.json?passkey=' + currentApiKey + '&apiversion=5.4&filter=name:eq:' + encodeURIComponent(document.getElementById('product-name').value), function(productAutoFill) {
-                $("#productid").val(productAutoFill.Results[0].Id)
-            })
-        }
-    </script>
     <footer>
 
     </footer>
+    <script type="text/javascript" src="script-footer.js">
+    </script>
 </body>
 
 </html>

@@ -1,7 +1,7 @@
 footer {height:100px;}
 strong {padding: 5px}
 th {text-align: left}
-tbody {vertical-align: bottom}
+tbody {vertical-align: bottom !Important}
 td {border: 1px solid black;}
 h1 {margin:0;}
 input {margin-right:20px;}
@@ -12,11 +12,13 @@ li {list-style: none}
 tbody, td, tr, button, input {vertical-align: bottom !Important;}
 label {margin-bottom:0px;}
 header {width:455px; margin:0 auto;}
+select {width:auto;}
 #logo {width:200px; margin:0 auto;}
 #pagetitle h1 {margin:0;}
 #fields {max-width: 600px; padding:10px;}
 .field {padding:10px 0 10px 10px; border-bottom:1px solid black;width:100%;}
 .options {padding-left:20px;}
+select.options {width:auto;}
 #product-info {padding-top:10px;margin-bottom: 10px}
 #form {margin-bottom: 10px}
 #buttons {margin-top:15px;}
@@ -25,7 +27,8 @@ header {width:455px; margin:0 auto;}
 div[id*="contextdatavalue_"], #context-data-questions {background-color:#00FA9A;}
 div[id*="rating_"], #rating, #secondary-rating-dimensions {background-color:#00FFFF;}
 #secondary-rating-dimensions, #context-data-questions {margin:0; padding:5px;}
-#product-image {min-width:50px;max-width: 100px}
+#product-image, #modal-product-image {min-width:50px;max-width: 100px}
+#modal-product-image {margin-left:30px;}
 /*.review-statistics, .upc, .productid, .productinfo {width:175px;}*/
 .products-productid {padding-right:10px;}
 #upc-warn {display:none;}
@@ -37,12 +40,11 @@ div[id*="tag_"]/*, div[id*="contextdatavalue_"], div[id*="rating_"],div[id*="pho
 #checkboxes td {padding:10px;font-size: 18px;font-weight: bold;}
 #ratings-search, #cdv-search {width:600px;padding:5px;}
 #api-key-button {width:30px; background-color:#00FA9A;}
-#submission-fields {padding-left:10px;}
+#submission-fields {margin-left:10px;}
 #compare-products {margin-top:10px;}
 form input[type="text"] {width:200px;}
-.btn, .compare-button {background-color: rgba(51, 188, 165, 0.8); color:white;}
+/*.btn, .compare-button {background-color: grey; color:white;}*/
 #product-name {font-size: 18px; margin:0;}
-.options {max-width:500px;}
 .review-statistics {background-color: #00FA9A;}
 #product-info label {margin:0;}
 #container {width:850px;}
@@ -50,13 +52,12 @@ form input[type="text"] {width:200px;}
 #product-content {display:none;}
 #submission-fields-container {margin: 0 auto;}
 #modal-header {border-bottom: none;padding:0; min-height: 0}
-#key {width:50%;padding-left: 10px}
+#key {width:50%;margin-left: 10px}
 #close {padding:5px 5px 0 0;}
 .submission-field-header {margin-top:0;}
 .field-info {max-height:18px;}
 #submission-fields-container {overflow-y: overlay }
-
-
-
+.review-statistics td {font-size:22px;}
+#name-wrapper {margin-left:10px; font-size: 26px}
 
 

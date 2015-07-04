@@ -97,4 +97,10 @@
             document.getElementById('productid').value = '';
             document.getElementById('product-name').placeholder = '';
         });
-            
+
+function appendCDV(){
+    $('.context-data-question .submissionid').append(option.value)
+}
+
+
+    

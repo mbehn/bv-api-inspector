@@ -1,6 +1,6 @@
 function renderFields() {
     $("#fields-link").html('Show available review submission fields for: ')
-    $("#product-info, #fields, #category-info, #product-header, #review-stats-info").empty();
+    $("#product-info, #fields, #category-info, #product-header, #review-stats-info, .rating .submissionid").empty();
     if ($("#staging-flag").attr('checked')) {
         var apihost = 'http://stg.api.bazaarvoice.com/data';
     } else {
@@ -15,7 +15,10 @@ function renderFields() {
     $.getJSON(apihost + '/submitreview.json?passkey=' + passkey + '&apiversion=5.4&productid=' + productid + '&displaycode=' + displayCode + '&userid=mbehntest1234&callback=?', function(json) {
         // console.log(json);
         if (json.HasErrors == true) {
-            alert(json.Errors[0].Code);
+            alert('Could not retrieve Submission Form data likely due to missing userid');
+            $("#fields-link, #fields-search").hide()
+        } else {
+            $("#fields-link, #fields-search").show()
         }
         var currentFieldNumber = 1;
         var ratingsSearch = []
@@ -188,13 +191,11 @@ function renderFields() {
 
 
 function getProductInformation() {
+    $("#product-content").show()
     if ($("#staging-flag").attr('checked')) {
         var apihost = 'http://stg.api.bazaarvoice.com/data';
     } else {
         var apihost = 'http://api.bazaarvoice.com/data';
-    }
-    if ($("#secondary-ratings").attr('checked')) {
-
     }
     var passkey = document.getElementById('apikey').value;
     $("#product-info, #fields, #category-info, #product-header, #review-stats-info").empty();
@@ -216,10 +217,9 @@ function getProductInformation() {
         });
     });
 }
-var $root = $('html, body');
-$('#fields-link').click(function() {
-    $root.animate({
-        scrollTop: $( $.attr(this, 'href') ).offset().top
-    }, 500);
-    return false;
-});
+function appendData() {
+    $('#name-wrapper').html('')
+    $('#name-wrapper').html(document.getElementById('product-name').value);
+    $("#modal-product-image").attr('src', document.getElementById('product-image').src)
+}
+

@@ -88,21 +88,21 @@
             <div id="buttons">
                 <input id="get-product-info" type="button" class="btn btn-sm" value="Get Product Info" onclick="renderFields()" />
                 <input type="button" class="bv-button btn btn-danger btn-sm" value="Clear" id="clear" />
-                <input type="button" class="bv-button btn btn-sm" value="get some product ids" id="products" onclick="getProductInformation()" />
+                <input type="button" class="bv-button btn btn-sm" value="get some product ids" id="products" onclick="getProductInformation()" value="Get some product ids">
             </div>
         </form>
 
         <div id="product-content">
             <label>Product Info:</label><br />
-            <button  class="btn btn-primary" id="fields-link" data-toggle="modal" data-target="#submission-fields-container"><b>Show available review submission fields for: </b></button>
             <table class="table table-striped" id="product-info"></table>
             <label>Category Info:</label>
             <table class="table table-striped" id="category-info"></table>
-            <section class="col col-lg-4">
+            <button  onclick="appendData()" class="btn btn-primary" id="fields-link" data-toggle="modal" data-target="#submission-fields-container"><b>Show available review submission fields for: </b></button>
+            <section class="col col-lg-7">
               <label>Review Stats:</label>
               <table class="table" id="review-stats-info"></table>
             </section>
-            <section class="table form-submit">
+            <section id="fields-search" class="table form-submit">
               <table>
                 <tr>
                     <td><label>Search secondary-ratings:&nbsp;&nbsp;</label></td>
@@ -119,14 +119,19 @@
                 </tr>
             </table>
             </section>          
-            <div id="submission-fields-container" class="modal fade col-lg-6 center" role="modal">
+            <div id="submission-fields-container" class="modal fade in col-lg-6 center" role="modal">
                 <div class="modal-content">
                     <div class="modal-header" id="modal-header">
                         <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
                     </div>
                     <br />
-                    <h3 class="modal-title" id="submission-fields">Submission Form Fields</h3>
+                    <strong id="name-wrapper"></strong>
+                    <img id="modal-product-image" />
+                    <h3 class="modal-title" id="submission-fields">Submission Form Fields: &nbsp;</h3>
                     <div id="key">
+                        <label id="key-label">
+                            Key
+                        </label>
                         <h5 id="secondary-rating-dimensions">Secondary Rating Dimensions</h5>
                         <h5 id="context-data-questions">Context Data Questions</h5>
                     </div>                           

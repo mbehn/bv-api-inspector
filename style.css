@@ -49,6 +49,14 @@ form input[type="text"] {width:200px;}
 #product-info > tbody > tr > td:nth-child(1), #category-info > tbody > tr > td:nth-child(1) {width:140px;}
 #product-content {display:none;}
 #submission-fields-container {margin: 0 auto;}
-#modal-header {border-bottom: none;padding:0;}
+#modal-header {border-bottom: none;padding:0; min-height: 0}
 #key {width:50%;padding-left: 10px}
 #close {padding:5px 5px 0 0;}
+.submission-field-header {margin-top:0;}
+.field-info {max-height:18px;}
+#submission-fields-container {overflow-y: overlay }
+
+
+
+
+

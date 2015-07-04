@@ -36,17 +36,18 @@ function renderFields() {
                 cdvSearch.push("Id: " + json.Data.Fields[i].Id + " - Label: " + json.Data.Fields[i].Label)
             }
             $("#fields").append(currentField);
-            $(currentField).append('<h4>Submission Field</h4>' +
-                '<li class="field-info required">Required: ' + json.Data.Fields[i].Required + '</li>' +
-                '<li class="field-info bv-label">Label: ' + json.Data.Fields[i].Label + '</li>' +
-                '<li class="field-info submissionid">Submission ID: ' + json.Data.Fields[i].Id + '</li>' +
-                '<li class="field-info type">Type : ' + json.Data.Fields[i].Type + '</li>')
+            $(currentField).append('<h4 class="submission-field-header">Submission Field: <i>' + json.Data.Fields[i].Label + '</i></h4>' +
+                '<li class="field-info required"><label>Required: </label> ' + json.Data.Fields[i].Required + '</li>' +
+                '<li class="field-info bv-label"><label>Label: </label> ' + json.Data.Fields[i].Label + '</li>' +
+                '<li class="field-info submissionid"><label>Example API POST: </label> &' + json.Data.Fields[i].Id + '=</li>' +
+                '<li class="field-info type"><label>Type : </label> ' + json.Data.Fields[i].Type + '</li>')
             if ((json.Data.Fields[i].Type == "TextInput") || (json.Data.Fields[i].Type == "TextAreaInput")) {
                 $(currentField).append('<li class="field-info MinLength">MinLength : ' + json.Data.Fields[i].MinLength + '</li>' +
                     '<li class="field-info MaxLength">MaxLength : ' + json.Data.Fields[i].MaxLength + '</li>'
                 )
             }
             if (json.Data.Fields[i].Type == "SelectInput") {
+
                 var options = document.createElement("select");
                 options.id = json.Data.Fields[i].Id + "_options"
                 options.className = "options form-control";
@@ -69,13 +70,16 @@ function renderFields() {
                 var selectedRating = $("#ratings-search").val();
             }))
         });
+        $(".rating").each(function(i, cdv) {
+            $(this).parent().prepend(this);
+        });
     })
     $.getJSON(apihost + '/products.json?passkey=' + passkey + '&apiversion=5.4&filter=id:eq:' + productid + '&callback=?&include=categories&filter_Reviews=issyndicated:eq:true&stats=reviews', function(productsjson) {
         // console.log(productsjson);
         var productInfo = document.createElement("div");
         productInfo.className = "product";
         //Set Variables
-        var productImageUrl, productPageUrl, productId, productName, productUPCs, productDescription, categoryName, categoryUrl
+        var productImageUrl, productPageUrl, productId, productName, productUPCs, productDescription, categoryName, categoryUrl, brandId, brandName
         if (!productsjson.Results[0].ImageUrl) {
             productImageUrl = 'images/no_image_avaliable.png';
         } else if (productsjson.Results[0].ImageUrl) {
@@ -106,14 +110,25 @@ function renderFields() {
         } else if (productsjson.Results[0].UPCs) {
             productUPCs = productsjson.Results[0].UPCs
         }
+        if (productsjson.Results[0].Brand == undefined) {
+            brandName = "No Brand Information"
+        } else {
+            brandName = productsjson.Results[0].Brand.Name
+            brandId = productsjson.Results[0].Brand.Id
+        }
         var EANs = productsjson.Results[0].EANs
         var categoryId = productsjson.Results[0].CategoryId
         var productRatings = []
 
         // var categoryid=productsjson.Results[0].CategoryId;
         $(  "#product-info").append('<tr><td class="productname">Product Name: </td><td><a href="' + productPageUrl + '" target="_blank"><h1 id="product-name">' + productName + '</td></tr></a>' +
-                                      '<tr><td class="productid" >Product ID: </td><td><code>' + productId + '</code></td></tr>'
+                                      '<tr><td>&nbsp;</td><td><a href = "' + productPageUrl + '" target="_blank"><img id="product-image" src="' + productImageUrl + '" /></a></td></tr><br />' +
+                                      '<tr><td class="productid" >Product ID: </td><td><code>' + productId + '</code></td></tr>' +
+                                      '<tr><td class="productid" >Brand Name: </td><td><code>' + brandName + '</code></td></tr>' +
+                                      '<tr><td class="productid" >Brand Id: </td><td><code>' + brandId + '</code></td></tr>' 
+
             )
+
         if (productUPCs) {
             $.each(productUPCs, function(u, upcs) {
                 $("#product-info").append('<tr><td class="upc">UPC: </td><td><code>' + productUPCs[u] + '</code></td></tr>');
@@ -127,7 +142,6 @@ function renderFields() {
         $("#product-info").append(
             '<tr><td>Description:</td><td>' + productDescription + '</td></tr><br />' +
             '<tr><td>Image URL:</td><td><code>' + productImageUrl + '</code></td></tr><br />' +
-            '<tr><td>Image:</td><td><a href = "' + productPageUrl + '" target="_blank"><img id="product-image" src="' + productImageUrl + '" /></a></td></tr><br />' +
             '<tr><td>Product Page URL:</td><td><code>' + productPageUrl + '</code></td></tr><br />' +
             '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>'
         );
@@ -171,7 +185,6 @@ function renderFields() {
 }
 
 
-
 function getProductInformation() {
     if ($("#staging-flag").attr('checked')) {
         var apihost = 'http://stg.api.bazaarvoice.com/data';
@@ -201,24 +214,10 @@ function getProductInformation() {
         });
     });
 }
-$.getJSON('prod-apikeys.json', function(apiKeys) {
-            var clients = []
-            var prodPasskey = []
-            $.each(apiKeys.Results, function(c, client) {
-                clients.push(apiKeys.Results[c].clientName);
-                prodPasskey.push(apiKeys.Results[c].prodPasskey);
-            })
-            $("#client-name").autocomplete({
-                source: clients
-            });
-            $("#client-name").keydown(function() {
-                var selectedClient = $("#client-name").val();
-                $.each(apiKeys.Results, function(cn, clientname) {
-                    if (selectedClient == apiKeys.Results[cn].clientName) {
-                        document.getElementById('apikey').value = apiKeys.Results[cn].prodPasskey
-                            // apiKeys.Results[cn].passkey = $("#apikey").val();
-                    }
-                })
-            })
-        })
-
+var $root = $('html, body');
+$('#fields-link').click(function() {
+    $root.animate({
+        scrollTop: $( $.attr(this, 'href') ).offset().top
+    }, 500);
+    return false;
+});

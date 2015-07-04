@@ -1,4 +1,5 @@
 function renderFields() {
+    $("#fields-link").html('Show available review submission fields for: ')
     $("#product-info, #fields, #category-info, #product-header, #review-stats-info").empty();
     if ($("#staging-flag").attr('checked')) {
         var apihost = 'http://stg.api.bazaarvoice.com/data';
@@ -116,6 +117,7 @@ function renderFields() {
             brandName = productsjson.Results[0].Brand.Name
             brandId = productsjson.Results[0].Brand.Id
         }
+        $("#fields-link").append('"' + productName + '"')
         var EANs = productsjson.Results[0].EANs
         var categoryId = productsjson.Results[0].CategoryId
         var productRatings = []

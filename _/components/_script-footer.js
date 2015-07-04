@@ -87,6 +87,7 @@
             })
         }
             $("#clear").click(function() {
+            $("#fields-link").html('Show available review submission fields for: ')
             $("#product-content").hide()
             $("#product-info, #fields, #category-info, #product-header, #review-stats-info").empty();
             // $("#fields").empty();

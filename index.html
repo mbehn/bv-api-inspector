@@ -94,7 +94,7 @@
 
         <div id="product-content">
             <label>Product Info:</label><br />
-            <a href="#fields" class="sliding-link" id="fields-link" data-toggle="modal" data-target="#submission-fields-container"><strong>Show available review submission fields for this product</strong></a>
+            <button  class="btn btn-primary" id="fields-link" data-toggle="modal" data-target="#submission-fields-container"><b>Show available review submission fields for: </b></button>
             <table class="table table-striped" id="product-info"></table>
             <label>Category Info:</label>
             <table class="table table-striped" id="category-info"></table>
@@ -119,11 +119,12 @@
                 </tr>
             </table>
             </section>          
-            <div id="submission-fields-container" class="modal fade col-lg-5 center" role="modal">
+            <div id="submission-fields-container" class="modal fade col-lg-6 center" role="modal">
                 <div class="modal-content">
                     <div class="modal-header" id="modal-header">
                         <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
                     </div>
+                    <br />
                     <h3 class="modal-title" id="submission-fields">Submission Form Fields</h3>
                     <div id="key">
                         <h5 id="secondary-rating-dimensions">Secondary Rating Dimensions</h5>

@@ -3,9 +3,10 @@
 
 <head>
     <link rel="icon" href="images/favicon.ico" type="image/gif" sizes="16x16">
-    <script src="jquery.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="jquery/jquery-ui.css">
-    <script src="jquery/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <title>API Inspector</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="http://meyerweb.com/eric/tools/css/reset/reset200802.css">
@@ -31,6 +32,7 @@
             
         </header>
         <a href="product-compare.html">Product Compare Tool</a>
+        <a href="syndication-match.html">Match Checker</a>
         <br />
         <br />
         <form id="form" role="form">
@@ -39,6 +41,9 @@
                     <td><label for="client-name"> Client Search:</label></td>
                     <td>
                         <input type="text" class="form-control" name="clientname" id="client-name">
+                    </td>
+                    <td id="cluster">
+                        
                     </td>
                 </tr>
                 <tr>
@@ -51,6 +56,15 @@
                     </td>
                     <td>
                         &nbsp;<input type="button" class="bv-button btn btn-sm" name="custom-apikey" id="custom-apikey" value="Enter apikey">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="stgapikey">Stg API Key: </label></td>
+                    <td>
+                        <input type="text" class="form-control" name="stgapikey" id="stgapikey" readonly>
+                    </td>
+                    <td class="checkbox">
+                        <input type="checkbox" id="staging-flag">
                     </td>
                 </tr>
                 <tr>
@@ -75,12 +89,6 @@
                     <td><label for="display-code">Display Code Override: </label></td>
                     <td>
                         <input class="form-control" type="text" name="displaycode" id="display-code">
-                    </td>
-                </tr>
-                <tr>
-                    <td><label for="staging-flag">Staging: </label></td>
-                    <td class="checkbox">
-                        <input type="checkbox" id="staging-flag" id="staging-flag">
                     </td>
                 </tr>
             </table>
@@ -125,9 +133,9 @@
                         <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
                     </div>
                     <br />
-                    <strong id="name-wrapper"></strong>
+                    <h2 id="name-wrapper"></h2>
                     <img id="modal-product-image" />
-                    <h3 class="modal-title" id="submission-fields">Submission Form Fields: &nbsp;</h3>
+                    <h3 class="modal-title" id="submission-fields">Submission Form Fields</h3>
                     <div id="key">
                         <label id="key-label">
                             Key

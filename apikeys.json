@@ -1,0 +1,22 @@
+{
+  "Results": [
+    {
+      "clientName": "ExampleClient1",
+      "prodPasskey": "ExampleClient1APIkey",
+      "stgPasskey": "ExampleClient1STGAPIkey",
+      "cluster": "clientCluster"
+    },
+    {
+      "clientName": "ExampleClient2",
+      "prodPasskey": "ExampleClient2APIkey",
+      "stgPasskey": "ExampleClient2STGAPIkey",
+      "cluster": "clientCluster"
+    },
+    {
+      "clientName": "ExampleClient3",
+      "prodPasskey": "ExampleClient3APIkey",
+      "stgPasskey": "ExampleClient3STGAPIkey",
+      "cluster": "clientCluster"
+    }
+    ]
+}

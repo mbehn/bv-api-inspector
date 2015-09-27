@@ -1,12 +1,14 @@
 function renderFields() {
+    var passkey
     $("#fields-link").html('Show available review submission fields for: ')
     $("#product-info, #fields, #category-info, #product-header, #review-stats-info, .rating .submissionid").empty();
     if ($("#staging-flag").attr('checked')) {
         var apihost = 'http://stg.api.bazaarvoice.com/data';
+        var passkey = document.getElementById('stgapikey').value;
     } else {
         var apihost = 'http://api.bazaarvoice.com/data';
+        var passkey = document.getElementById('apikey').value;
     }
-    var passkey = document.getElementById('apikey').value;
     var productid = document.getElementById('productid').value;
     var displayCode = document.getElementById('display-code').value;
     if (!productid) {
@@ -14,6 +16,7 @@ function renderFields() {
     }
     $.getJSON(apihost + '/submitreview.json?passkey=' + passkey + '&apiversion=5.4&productid=' + productid + '&displaycode=' + displayCode + '&userid=mbehntest1234&callback=?', function(json) {
         // console.log(json);
+
         if (json.HasErrors == true) {
             alert('Could not retrieve Submission Form data likely due to missing userid');
             $("#fields-link, #fields-search").hide()
@@ -41,9 +44,9 @@ function renderFields() {
             }
             $("#fields").append(currentField);
             $(currentField).append('<h4 class="submission-field-header">Submission Field: <i>' + json.Data.Fields[i].Label + '</i></h4>' +
-                '<li class="field-info required"><label>Required: </label> ' + json.Data.Fields[i].Required + '</li>' +
                 '<li class="field-info bv-label"><label>Label: </label> ' + json.Data.Fields[i].Label + '</li>' +
-                '<li class="field-info submissionid"><label>Example API POST: </label> &' + json.Data.Fields[i].Id + '=</li>' +
+                '<li class="field-info submissionid"><label>API POST: </label> &' + json.Data.Fields[i].Id + '=</li>' +
+                '<li class="field-info required"><label>Required: </label> ' + json.Data.Fields[i].Required + '</li>' +
                 '<li class="field-info type"><label>Type : </label> ' + json.Data.Fields[i].Type + '</li>')
             if ((json.Data.Fields[i].Type == "TextInput") || (json.Data.Fields[i].Type == "TextAreaInput")) {
                 $(currentField).append('<li class="field-info MinLength">MinLength : ' + json.Data.Fields[i].MinLength + '</li>' +
@@ -83,7 +86,7 @@ function renderFields() {
         var productInfo = document.createElement("div");
         productInfo.className = "product";
         //Set Variables
-        var productImageUrl, productPageUrl, productId, productName, productUPCs, productDescription, categoryName, categoryUrl, brandId, brandName
+        var productImageUrl, productPageUrl, productId, productName, productUPCs, productDescription, categoryName, categoryUrl, brandId, brandName, totalReviews, avererageRating
         if (!productsjson.Results[0].ImageUrl) {
             productImageUrl = 'images/no_image_avaliable.png';
         } else if (productsjson.Results[0].ImageUrl) {
@@ -99,6 +102,7 @@ function renderFields() {
         } else if (productsjson.Results[0].Name) {
             productName = productsjson.Results[0].Name;
         }
+        $("#fields-link").append(productName)
         if (!productsjson.Results[0].Id) {
             productId = "No Product ID Provided";
         } else if (productsjson.Results[0].Id) {
@@ -120,13 +124,13 @@ function renderFields() {
             brandName = productsjson.Results[0].Brand.Name
             brandId = productsjson.Results[0].Brand.Id
         }
-        $("#fields-link").append('"' + productName + '"')
+        avererageRating = productsjson.Results[0].ReviewStatistics.AverageOverallRating
+        totalReviews = productsjson.Results[0].TotalReviewCount
         var EANs = productsjson.Results[0].EANs
         var categoryId = productsjson.Results[0].CategoryId
         var productRatings = []
-
         // var categoryid=productsjson.Results[0].CategoryId;
-        $(  "#product-info").append('<tr><td class="productname">Product Name: </td><td><a href="' + productPageUrl + '" target="_blank"><h1 id="product-name">' + productName + '</td></tr></a>' +
+        $(  "#product-info").append('<tr><td class="productname">Product Name: </td><td><h1 id="product-name">' + productName + '</td></tr>' +
                                       '<tr><td>&nbsp;</td><td><a href = "' + productPageUrl + '" target="_blank"><img id="product-image" src="' + productImageUrl + '" /></a></td></tr><br />' +
                                       '<tr><td class="productid" >Product ID: </td><td><code>' + productId + '</code></td></tr>' +
                                       '<tr><td class="productid" >Brand Name: </td><td><code>' + brandName + '</code></td></tr>' +
@@ -151,8 +155,10 @@ function renderFields() {
             '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>'
         );
         //Get Product Statistics
+    // $("#review-stats-info").append('<tr class="review-statistics"><td>Average Rating: </td><td>' + avererageRating + '</td></tr>' +
+                                   // '<tr class="review-statistics"><td>Total Reviews: </td><td>' + totalReviews + '</td></tr>')
     $.getJSON(apihost + '/categories.json?passkey=' + passkey + '&apiversion=5.4&filter=id:eq:' + categoryId, function(categoriesjson) {
-        console.log(categoriesjson)
+        // console.log(categoriesjson)
         $("#category-info").append('<tr><td>Category Name: </td><td><a href="' + categoriesjson.Results[0].CategoryPageUrl + '" target="_blank">' + categoriesjson.Results[0].Name + '</a></td></tr>' +
                                    '<tr><td>CategoryId: </td><td><code>' + categoriesjson.Results[0].Id + '</code></td></tr>' +
                                    '<tr><td>Category URL: </td><td><code>' + categoriesjson.Results[0].CategoryPageUrl + '</code></td></tr>'
@@ -181,9 +187,8 @@ function renderFields() {
             $("#review-stats-info").append(
                 '<tr class="review-statistics"><td >Native Approved Reviews: </td><td>' + nativeReviews + '</td></tr>' +            
                 '<tr class="review-statistics"><td >Syndicated Reviews:  </td><td>' + syndicatedReviews + '</td></tr>' +
-                '<tr class="review-statistics"><td >Total Reviews: </td><td>' + totalReviews + '</td></tr>' +
-                '<tr class="review-statistics"><td >Avg Rating: </td><td><b>' + avgRatingTotalReviews + '</b></td></tr></table>'
-
+                '<tr class="review-statistics"><td >Total Reviews: </td><td>' + totalReviews + '</td></tr>' +                
+                '<tr class="review-statistics"><td >Average Rating: </td><td>' + avgRatingTotalReviews + '</td></tr>'
             )
         })
     $("#product-content").show()
@@ -194,10 +199,11 @@ function getProductInformation() {
     $("#product-content").show()
     if ($("#staging-flag").attr('checked')) {
         var apihost = 'http://stg.api.bazaarvoice.com/data';
+        var passkey = document.getElementById('stgapikey').value;
     } else {
         var apihost = 'http://api.bazaarvoice.com/data';
+        var passkey = document.getElementById('apikey').value;
     }
-    var passkey = document.getElementById('apikey').value;
     $("#product-info, #fields, #category-info, #product-header, #review-stats-info").empty();
     $.getJSON(apihost + '/products.json?passkey=' + passkey + '&apiversion=5.4&callback=?&include=categories&limit=100&filter=isactive:eq:true', function(products) {
         $("#product-info").empty();
@@ -222,4 +228,3 @@ function appendData() {
     $('#name-wrapper').html(document.getElementById('product-name').value);
     $("#modal-product-image").attr('src', document.getElementById('product-image').src)
 }
-

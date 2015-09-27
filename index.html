@@ -27,7 +27,7 @@
     <div id="container" class="container">
         <header class="header">            
             <div id="pagetitle">
-                <h1>API Inspector</h1>
+                <h1>Bazaarvoice API Inspector <span id="staging-indiicator" style="opacity:0;">Staging</span></h1>
             </div>
             
         </header>
@@ -102,10 +102,10 @@
 
         <div id="product-content">
             <label>Product Info:</label><br />
+            <button  onclick="appendData()" class="btn btn-primary" id="fields-link" data-toggle="modal" data-target="#submission-fields-container"><b>Show available review submission fields for: </b></button>
             <table class="table table-striped" id="product-info"></table>
             <label>Category Info:</label>
-            <table class="table table-striped" id="category-info"></table>
-            <button  onclick="appendData()" class="btn btn-primary" id="fields-link" data-toggle="modal" data-target="#submission-fields-container"><b>Show available review submission fields for: </b></button>
+            <table class="table table-striped" id="category-info"></table>            
             <section class="col col-lg-7">
               <label>Review Stats:</label>
               <table class="table" id="review-stats-info"></table>
@@ -145,6 +145,21 @@
                     </div>                           
                     <div id="fields"></div>
                 </div>
+            </div>
+            <div id="error-modal" class="modal fade in col-lg-6 center" role="modal">
+                <div class="modal-content" id="modal-header">
+                    <div class="modal-header" id="modal-header">
+                        <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <br />
+                    <h2>Errors</h2>
+                    <div>
+                        <table  id="errors-content" class="table-bordered">
+                            <tr><td>Error Code</td><td>Error Message</td></tr>
+                        </table>
+                    </div>
+                </div>
+
             </div>
 
         </div>

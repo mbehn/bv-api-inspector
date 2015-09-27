@@ -29,7 +29,8 @@
         })
         $("#custom-apikey").click(function(){
           $("#apikey").val('')
-          $("#apikey").attr("readonly", false);
+          $("#apikey, #stgapikey").attr("readonly", false);
+
         })
         $(".products-productid").click(function() {
             document.getElementById("productid").value = this.value
@@ -148,3 +149,11 @@
 function appendCDV(){
     $('.context-data-question .submissionid').append(option.value)
 }
+$('#staging-flag').change(function(){
+    if (this.checked) {
+        $('#staging-indiicator').css('opacity','1')
+    } else {
+        $('#staging-indiicator').css('opacity','0')
+    }
+
+})

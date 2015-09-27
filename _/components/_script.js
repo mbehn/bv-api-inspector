@@ -14,14 +14,15 @@ function renderFields() {
     if (!productid) {
         var productid = 'test1'
     }
-    $.getJSON(apihost + '/submitreview.json?passkey=' + passkey + '&apiversion=5.4&productid=' + productid + '&displaycode=' + displayCode + '&userid=mbehntest1234&callback=?', function(json) {
+    $.getJSON(apihost + '/submitreview.json?passkey=' + passkey + '&apiversion=5.4&productid=' + productid + '&displaycode=' + displayCode + '&callback=?', function(json) {
         // console.log(json);
 
         if (json.HasErrors == true) {
-            alert('Could not retrieve Submission Form data likely due to missing userid');
-            $("#fields-link, #fields-search").hide()
-        } else {
-            $("#fields-link, #fields-search").show()
+            $.each(json.Errors, function(e, error) {
+                $("#errors-content").append('<tr><td>' + json.Errors[e].Code + '</td><td>' + json.Errors[e].Message + '</td><tr>'
+                    );
+            })
+            $("#error-modal").modal();
         }
         var currentFieldNumber = 1;
         var ratingsSearch = []
